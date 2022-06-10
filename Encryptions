@@ -1,0 +1,46 @@
+import random
+class Hash:
+    def __init__(self, key):
+        self.__key = key
+
+    @property
+    def key(self):
+        return self.__key
+
+    @key.setter
+    def key(self, newkey):
+        self.__key = newkey
+    @staticmethod
+    def __f(x):
+        return x*3 + 2
+    @staticmethod
+    def __invf(x):
+        return (x-2)//3
+
+    def encrypt(self, text):
+        alphabet = "abcdefghijklmnopqrstuvwxyz"
+        enc = ""
+        for i in text:
+            if i != " ":
+                n = self.__f(alphabet.find(i))
+                for j in range(n):
+                    enc += alphabet[random.randint(0, 25)]
+                enc += '-'
+            else:
+                enc += " "
+        return enc
+    def decrypt(self, text):
+        alphabet = "abcdefghijklmnopqrstuvwxyz"
+        dec = ""
+        temp = 0
+        for i in text:
+            if i != " ":
+                if i != '-':
+                    temp += 1
+                else:
+                    temp = self.__invf(temp)
+                    dec += alphabet[temp]
+                    temp = 0
+            else:
+                dec += " "
+        return dec
